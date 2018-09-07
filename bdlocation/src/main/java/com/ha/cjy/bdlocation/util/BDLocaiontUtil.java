@@ -1,6 +1,7 @@
 package com.ha.cjy.bdlocation.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -46,10 +47,9 @@ public class BDLocaiontUtil {
      */
     private void init(){
         locationService = new LocationService(mContext);
-        locationService.start();
-
         //获取locationservice实例，建议应用中只初始化1个location实例
         locationService.registerListener(mListener);
+        locationService.start();
     }
 
     /**
@@ -116,6 +116,11 @@ public class BDLocaiontUtil {
         public void onReceiveLocation(BDLocation location) {
             LocationInfo info =  new LocationInfo(location);
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
+                double latitude = location.getLatitude();//经度
+                double longitude = location.getLongitude();//纬度
+                location.setLatitude(latitude);
+                location.setLongitude(longitude);
+
                 String addr = location.getAddrStr();    //获取详细地址信息
                 if (addr == null){
                     startLocation();
@@ -126,14 +131,12 @@ public class BDLocaiontUtil {
                 String city = location.getCity();    //获取城市
                 String district = location.getDistrict();    //获取区县
                 String street = location.getStreet();    //获取街道信息
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
+
                 info.setLocationInfo(latitude,longitude,addr,country,province,city,district,street);
             }
             if (mCallback != null){
                 mCallback.onLocationResult(info);
             }
         }
-
     };
 }

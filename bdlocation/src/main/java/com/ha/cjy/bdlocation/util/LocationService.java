@@ -107,6 +107,7 @@ public class LocationService {
 	public void start(){
 		synchronized (objLock) {
 			if(client != null && !client.isStarted()){
+				client.startIndoorMode();
 				client.start();
 			}
 			if (client != null && client.isStarted()){

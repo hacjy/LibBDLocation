@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ha.cjy.bdlocation.bean.LocationInfo;
+import com.ha.cjy.bdlocation.util.BDLocaiontUtil;
 import com.ha.cjy.bdlocation.util.BDLocationManager;
 import com.ha.cjy.bdlocation.util.LocationPremissionUtil;
 import com.ha.cjy.bdlocation.util.LocationResultCallback;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initListener(){
         mBtnLocation.setOnClickListener(this);
+        BDLocaiontUtil.getIntance(this);
         BDLocationManager.requestionPermission(this);
     }
 
